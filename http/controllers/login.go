@@ -94,7 +94,7 @@ func (this *LoginController) Post() {
 		if !cpt.VerifyReq(this.Ctx.Request) {
 			this.SetSession("loginFailed", "3")
 			beego.Notice(fmt.Sprintf("%s - - [%s] Login Failed: Captcha Wrong", clientIP, logtime))
-			this.Ctx.Redirect(302, fmt.Sprintf("/login?target=%s", target))
+			this.Ctx.Redirect(302, fmt.Sprintf("/auth/login?target=%s", target))
 			return
 		}
 	}
@@ -103,7 +103,7 @@ func (this *LoginController) Post() {
 		if !utils.In_slice(username, g.Config().Control.AllowUser) {
 			this.SetSession("loginFailed", "2")
 			beego.Notice(fmt.Sprintf("%s - - [%s] Login Failed: user %s is not allowed", clientIP, logtime, username))
-			this.Ctx.Redirect(302, fmt.Sprintf("/login?target=%s", target))
+			this.Ctx.Redirect(302, fmt.Sprintf("/auth/login?target=%s", target))
 			return
 		}
 	}
@@ -111,7 +111,7 @@ func (this *LoginController) Post() {
 	if err == nil {
 		//登录成功设置session
 
-		if target == "" || target == "/login" {
+		if target == "" || target == "/auth/login" {
 			beego.Warning(fmt.Sprintf("%s - - [%s] Login Failed: Missing X-Target", clientIP, logtime))
 			this.Ctx.Redirect(302, "/")
 		}
@@ -121,6 +121,6 @@ func (this *LoginController) Post() {
 	} else {
 		this.SetSession("loginFailed", "1")
 		beego.Notice(fmt.Sprintf("%s - - [%s] Login Failed: %s", clientIP, logtime, err.Error()))
-		this.Ctx.Redirect(302, fmt.Sprintf("/login?target=%s", target))
+		this.Ctx.Redirect(302, fmt.Sprintf("/auth/login?target=%s", target))
 	}
 }

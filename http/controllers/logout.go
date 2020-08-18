@@ -20,5 +20,5 @@ func (this *LogoutController) Get() {
 		this.DelSession("loginFailed")
 		beego.Notice(fmt.Sprintf("%s - %s [%s] Logout Successed", clientIP, uname, logtime))
 	}
-	this.Ctx.Redirect(302, "/")
+	this.Ctx.Redirect(302, "/auth")
 }

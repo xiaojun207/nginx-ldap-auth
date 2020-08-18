@@ -12,10 +12,10 @@ func Start() {
 	beego.BConfig.WebConfig.Session.SessionOn = true
 	beego.BConfig.WebConfig.Session.SessionName = "sessionID"
 	beego.BConfig.WebConfig.EnableXSRF = true
-	beego.BConfig.WebConfig.XSRFKey = "5ba12e0e0e34570a508ab27194d55075"
+	beego.BConfig.WebConfig.XSRFKey = "ed769515656b704dee92d77e28663147"
 	beego.BConfig.WebConfig.XSRFExpire = 3600
 
-	beego.SetStaticPath("/static", "static")
+	beego.SetStaticPath("/auth/static/", "static")
 
 	if !g.Config().Http.Debug {
 		beego.SetLevel(beego.LevelInformational)

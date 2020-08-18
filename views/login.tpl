@@ -11,17 +11,17 @@
     <title>Login Page</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/auth/static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="/auth/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/static/css/signin.css" rel="stylesheet">
+    <link href="/auth/static/css/signin.css" rel="stylesheet">
     <link rel="shortcut icon" href="static/favicon.ico">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="/static/js/ie-emulation-modes-warning.js"></script>
+    <script src="/auth/static/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -34,12 +34,12 @@
  <nav class="navbar navbar-default navbar-static-top">
   <div class="container">
     <ul class="nav navbar-nav navbar-right">
-       <li><a href="https://github.com/freedomkk-qfeng/nginx-ldap-auth">GITHUB</a></li>
+       <li><a href="/auth/login">单点登录</a></li>
     </ul>
   </div>
 </nav>
     <div class="container">
-	    <form action="/login" method="post" class="form-signin">
+	    <form action="/auth/login" method="post" class="form-signin">
 		{{ .xsrfdata }}
 		    <h2 class="text-center" class="form-signin-heading">Login Page</h2>
 		    <div class="form-group">
@@ -61,11 +61,11 @@
 					</div>
 				</div>
 			</div>
-			{{end}}		
+			{{end}}
 			<button class="btn btn-lg btn-primary btn-block" type="submit" value="Login">login</button>
 			 <input type="hidden" name="target" value={{.target}}>
 			{{.msg}}
-			
+
 		</form>
     </div>
 
@@ -76,6 +76,6 @@
     </footer>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/static/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="/auth/static/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
