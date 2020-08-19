@@ -2,12 +2,12 @@
 
 A simple example of LDAP authentication using ngx_http_auth_request_module by golang.
 
-[中文](https://github.com/shanghai-edu/nginx-ldap-auth/blob/master/README_CN.MD)
+[中文](https://github.com/xiaojun207/nginx-ldap-auth/blob/master/README_CN.MD)
 
 ### usage
 #### Build from source
 ```
-# git clone https://github.com/shanghai-edu/nginx-ldap-auth
+# git clone https://github.com/xiaojun207/nginx-ldap-auth
 # go get ./...
 # chmod +x control
 # ./control build

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/shanghai-edu/nginx-ldap-auth/g"
-	"github.com/shanghai-edu/nginx-ldap-auth/http"
+	"github.com/xiaojun207/nginx-ldap-auth/g"
+	"github.com/xiaojun207/nginx-ldap-auth/http"
 )
 
 func main() {

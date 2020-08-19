@@ -45,7 +45,7 @@
       </div>
     <footer class="footer">
       <div class="container" class="center-block">
-        <p class="text-muted">Copyright © 2017 freedomkk-qfeng</p>
+        <p class="text-muted">Copyright © 2020 xiaojun</p>
       </div>
     </footer>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

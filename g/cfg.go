@@ -7,8 +7,8 @@ import (
 
 	"sync"
 
-	"github.com/shanghai-edu/nginx-ldap-auth/utils"
 	"github.com/toolkits/file"
+	"github.com/xiaojun207/nginx-ldap-auth/utils"
 )
 
 type GlobalConfig struct {

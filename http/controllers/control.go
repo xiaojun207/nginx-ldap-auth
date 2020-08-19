@@ -2,12 +2,13 @@ package controllers
 
 import (
 	"fmt"
+	"github.com/astaxie/beego/logs"
 	"time"
 
 	"github.com/astaxie/beego"
-	"github.com/shanghai-edu/nginx-ldap-auth/g"
-	"github.com/shanghai-edu/nginx-ldap-auth/utils"
 	"github.com/toolkits/file"
+	"github.com/xiaojun207/nginx-ldap-auth/g"
+	"github.com/xiaojun207/nginx-ldap-auth/utils"
 )
 
 type ControlController struct {
@@ -44,7 +45,7 @@ func (this *ControlController) Get() {
 		this.Ctx.Output.Body([]byte(file.SelfDir()))
 	case "reload":
 		g.ParseConfig(g.ConfigFile)
-		beego.Notice(fmt.Sprintf("%s - - [%s] Config Reloaded", clientIP, logtime))
+		logs.Notice(fmt.Sprintf("%s - - [%s] Config Reloaded", clientIP, logtime))
 		this.Ctx.Output.Body([]byte("config reloaded"))
 	}
 }

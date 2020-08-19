@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/shanghai-edu/nginx-ldap-auth/g"
+	"github.com/xiaojun207/nginx-ldap-auth/g"
 )
 
 type MainController struct {

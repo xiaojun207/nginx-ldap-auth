@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login Page</title>
+    <title>单点登录</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/auth/static/css/bootstrap.min.css" rel="stylesheet">
@@ -31,17 +31,11 @@
   </head>
 
   <body>
- <nav class="navbar navbar-default navbar-static-top">
-  <div class="container">
-    <ul class="nav navbar-nav navbar-right">
-       <li><a href="/auth/login">单点登录</a></li>
-    </ul>
-  </div>
-</nav>
+
     <div class="container">
 	    <form action="/auth/login" method="post" class="form-signin">
 		{{ .xsrfdata }}
-		    <h2 class="text-center" class="form-signin-heading">Login Page</h2>
+		    <h2 class="text-center" class="form-signin-heading">单点登录</h2>
 		    <div class="form-group">
 				<label class="sr-only">Username</label>
 		        <input type="text" name="username" class="form-control" placeholder="Username" required>
@@ -71,7 +65,7 @@
 
     <footer class="footer">
       <div class="container" class="center-block">
-        <p class="text-muted">Copyright © 2017 freedomkk-qfeng</p>
+        <p class="text-muted">Copyright © 2020 xiaojun</p>
       </div>
     </footer>
 

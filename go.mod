@@ -1,4 +1,4 @@
-module github.com/shanghai-edu/nginx-ldap-auth
+module github.com/xiaojun207/nginx-ldap-auth
 
 go 1.14
 

@@ -10,9 +10,9 @@ type ErrorController struct {
 
 func (this *ErrorController) Error401() {
 	this.Data["content"] = "Your IP Is Not Allowed"
-	this.TplName = "deny.tpl"
+	this.TplName = "template/deny.tpl"
 }
 func (this *ErrorController) Error403() {
 	this.Data["content"] = "This Time Is Not Allowed"
-	this.TplName = "deny.tpl"
+	this.TplName = "template/deny.tpl"
 }

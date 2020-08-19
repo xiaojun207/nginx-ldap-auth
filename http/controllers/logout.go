@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"github.com/astaxie/beego/logs"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -18,7 +19,7 @@ func (this *LogoutController) Get() {
 	if uname != nil {
 		this.DelSession("uname")
 		this.DelSession("loginFailed")
-		beego.Notice(fmt.Sprintf("%s - %s [%s] Logout Successed", clientIP, uname, logtime))
+		logs.Notice(fmt.Sprintf("%s - %s [%s] Logout Successed", clientIP, uname, logtime))
 	}
-	this.Ctx.Redirect(302, "/auth")
+	this.Ctx.Redirect(302, "/auth/")
 }

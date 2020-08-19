@@ -6,14 +6,14 @@ Golang 实现
 ### usage
 #### Build from source
 ```
-# git clone https://github.com/shanghai-edu/nginx-ldap-auth
+# git clone https://github.com/xiaojun207/nginx-ldap-auth
 # go get ./...
 # chmod +x control
 # ./control build
 # ./control pack
 ```
 这里会 pack 出一个 tar 包，拿去部署即可
-也可以直接从 [release](https://github.com/shanghai-edu/nginx-ldap-auth/releases) 下载编译好的版本
+也可以直接从 [release](https://github.com/xiaojun207/nginx-ldap-auth/releases) 下载编译好的版本
 #### Install
 ```
 # tar -zxvf nginx-ldap-auth-0.1.tar.gz 
