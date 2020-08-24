@@ -21,5 +21,5 @@ func (this *LogoutController) Get() {
 		this.DelSession("loginFailed")
 		logs.Notice(fmt.Sprintf("%s - %s [%s] Logout Successed", clientIP, uname, logtime))
 	}
-	this.Ctx.Redirect(302, "/auth/")
+	this.Ctx.Redirect(302, "/auth/login")
 }

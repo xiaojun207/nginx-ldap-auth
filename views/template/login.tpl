@@ -51,7 +51,7 @@
 						<input  class="form-control" name="captcha"  type="text" placeholder="Captcha" required>
 			 	    </div>
 					<div class="col-md-6">
-						{{create_captcha}}
+						{{createcaptcha}}
 					</div>
 				</div>
 			</div>

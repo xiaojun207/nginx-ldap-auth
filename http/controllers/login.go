@@ -20,13 +20,45 @@ type LoginController struct {
 
 func init() {
 	store := cache.NewMemoryCache()
-	cpt = captcha.NewWithFilter("/captcha/", store)
-	cpt.ChallengeNums = 6
+	cpt = captcha.NewWithFilter("/auth/captcha/", store)
+	cpt.ChallengeNums = 2
 	cpt.StdWidth = 120
 	cpt.StdHeight = 40
+
+	createCaptcha := func() template.HTML {
+		value, err := cpt.CreateCaptcha()
+		if err != nil {
+			logs.Error("Create Captcha Error:", err)
+			return ""
+		}
+		// create html
+		return template.HTML(fmt.Sprintf(`<input type="hidden" name="%s" value="%s">`+
+			`<a class="captcha" href="javascript:">`+
+			`<img onclick="this.src=('%s%s?reload='+(new Date()).getTime())" class="captcha-img" src="%s%s">`+
+			`</a>`, cpt.FieldIDName, value, cpt.URLPrefix, value, cpt.URLPrefix, value))
+	}
+	// add to template func map
+	beego.AddFuncMap("createcaptcha", createCaptcha)
 }
 
 var cpt *captcha.Captcha
+
+func getMsg(loginFailed interface{}) string {
+	var msg string
+	switch loginFailed {
+	case "1":
+		msg = "Login Failed: Username Or Password Wrong"
+	case "2":
+		msg = "Login Failed: User is not Allowed"
+	case "3":
+		msg = "Login Failed: Captcha Wrong"
+	case "4":
+		msg = "Login Failed: 尝试次数过多"
+	case "5":
+		msg = "Login Failed: 尝试过于频繁"
+	}
+	return msg
+}
 
 func (this *LoginController) Get() {
 	this.Data["xsrfdata"] = template.HTML(this.XSRFFormHTML())
@@ -44,15 +76,7 @@ func (this *LoginController) Get() {
 	if loginFailed != nil {
 		this.Data["captcha"] = true
 	}
-	var msg string
-	switch loginFailed {
-	case "1":
-		msg = "Login Failed: Username Or Password Wrong"
-	case "2":
-		msg = "Login Failed: User is not Allowed"
-	case "3":
-		msg = "Login Failed: Captcha Wrong"
-	}
+	msg := getMsg(loginFailed)
 	this.Data["msg"] = msg
 	this.TplName = "template/login.tpl"
 	clientIP := this.Ctx.Input.IP()
@@ -108,12 +132,52 @@ func (this *LoginController) Post() {
 			return
 		}
 	}
+
+	if len(g.Config().Control.Users) > 0 {
+		user, err := g.Config().Control.GetUser(username)
+		if err == nil {
+			lastTry := user.LastTry
+			user.LastTry = time.Now()
+			if user.Num > 0 && user.Num > user.TryNum && time.Now().Unix()-lastTry.Unix() < int64(user.TryNum*60) {
+				this.SetSession("loginFailed", "4")
+				logs.Notice(fmt.Sprintf("%s - - [%s] Login Failed: %s", clientIP, logtime, "尝试次数过多"))
+				this.Ctx.Redirect(302, fmt.Sprintf("/auth/login?target=%s", target))
+				return
+			}
+
+			if user.Num > 0 && time.Now().Unix()-lastTry.Unix() < int64(user.Num*10) {
+				this.SetSession("loginFailed", "5")
+				logs.Notice(fmt.Sprintf("%s - - [%s] Login Failed: %s", clientIP, logtime, "尝试过于频繁"))
+				this.Ctx.Redirect(302, fmt.Sprintf("/auth/login?target=%s", target))
+				return
+			}
+
+			if user.PassWord == password {
+				//登录成功设置session
+				user.Num = 0
+				if target == "" || target == "/auth/login" {
+					logs.Warning(fmt.Sprintf("%s - - [%s] Login Failed: Missing X-Target", clientIP, logtime))
+					this.Ctx.Redirect(302, "/")
+				}
+				this.SetSession("uname", username)
+				logs.Notice(fmt.Sprintf("%s - %s [%s] Login Successed", clientIP, username, logtime))
+				this.Ctx.Redirect(302, target)
+			} else {
+				user.Num = user.Num + 1
+				this.SetSession("loginFailed", "1")
+				logs.Notice(fmt.Sprintf("%s - - [%s] Login Failed: %s, num:%d", clientIP, logtime, "用户名密码错误", user.Num))
+				this.Ctx.Redirect(302, fmt.Sprintf("/auth/login?target=%s", target))
+			}
+			return
+		}
+	}
+
 	err := utils.LDAP_Auth(g.Config().Ldap, username, password)
 	if err == nil {
 		//登录成功设置session
 
 		if target == "" || target == "/auth/login" {
-			beego.Warning(fmt.Sprintf("%s - - [%s] Login Failed: Missing X-Target", clientIP, logtime))
+			logs.Warning(fmt.Sprintf("%s - - [%s] Login Failed: Missing X-Target", clientIP, logtime))
 			this.Ctx.Redirect(302, "/")
 		}
 		this.SetSession("uname", username)

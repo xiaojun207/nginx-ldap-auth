@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/xiaojun207/nginx-ldap-auth/g"
 )
 
 type MainController struct {
@@ -11,9 +10,23 @@ type MainController struct {
 
 func (this *MainController) Get() {
 	uname := this.GetSession("uname")
+
+	data := map[string]interface{}{}
+
 	if uname == nil {
-		this.Ctx.Redirect(302, "/auth/login")
-		return
+		data = map[string]interface{}{
+			"code": "100100",
+			"msg":  "未登录",
+		}
+	} else {
+		data = map[string]interface{}{
+			"code": "100200",
+			"msg":  "成功",
+			"data": uname,
+		}
 	}
-	this.Ctx.Output.Body([]byte("nginx-ldap-auth, version " + g.VERSION + ", this user:" + uname.(string)))
+
+	this.Data["json"] = data
+	this.ServeJSON()
+	//this.Ctx.Output.Body([]byte("nginx-ldap-auth, version " + g.VERSION + ", this user:" + uname.(string)))
 }

@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"log"
 
 	ldap "gopkg.in/ldap.v2"
 )
@@ -94,6 +95,7 @@ func LDAP_Auth(lc *LDAP_CONFIG, username, password string) (err error) {
 	defer lc.Close()
 
 	if err != nil {
+		log.Println("LDAP_Auth.err.username, password:", username, password)
 		return
 	}
 	err = lc.Auth(username, password)
