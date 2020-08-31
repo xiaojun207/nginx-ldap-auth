@@ -9,6 +9,5 @@ COPY App /app/App
 COPY cfg.json /app/cfg.json
 COPY views /app/views
 
-COPY deploy/entrypoint.sh /app/entrypoint.sh
-ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "/app/App"]
 
