@@ -24,12 +24,9 @@ FROM alpine:latest AS production
 RUN mkdir /app
 WORKDIR /app
 
-COPY App /app/App
-COPY cfg.json /app/cfg.json
-COPY views /app/views
-
 COPY --from=build /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 COPY --from=build /go/release/App /app/
+COPY --from=build /go/release/views /app/views
 COPY --from=build /go/release/cfg.json /app/
 
 #暴露端口
