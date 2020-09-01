@@ -8,8 +8,8 @@ ENV GO111MODULE on
 
 WORKDIR /go/cache
 
-ADD ../go.mod .
-ADD ../go.sum .
+ADD go.mod .
+ADD go.sum .
 RUN go mod download
 
 WORKDIR /go/release

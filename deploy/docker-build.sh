@@ -25,7 +25,7 @@ upx App
 # build docker image #
 #####################
 
-docker build --build-arg exePath=App -t ${DOCKER_BASE_REPO}/${APP_NAME}:${DOCKER_BUILD_TAG} -f deploy/Dockerfile .
+docker build --build-arg exePath=App -t ${DOCKER_BASE_REPO}/${APP_NAME}:${DOCKER_BUILD_TAG} -f Dockerfile .
 docker tag ${DOCKER_BASE_REPO}/${APP_NAME}:${DOCKER_BUILD_TAG} ${DOCKER_BASE_REPO}/${APP_NAME}:latest
 docker push ${DOCKER_BASE_REPO}/${APP_NAME}:${DOCKER_BUILD_TAG}
 docker push ${DOCKER_BASE_REPO}/${APP_NAME}:latest
