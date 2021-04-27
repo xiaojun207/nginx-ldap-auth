@@ -6,6 +6,7 @@ import (
 )
 
 func ConfigRouters() {
+	beego.Router("/", &controllers.MainController{})
 	beego.Router("/auth", &controllers.MainController{})
 	beego.Router("/auth/login", &controllers.LoginController{})
 	beego.Router("/auth/logout", &controllers.LogoutController{})

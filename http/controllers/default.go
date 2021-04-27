@@ -8,11 +8,10 @@ type MainController struct {
 	beego.Controller
 }
 
-func (this *MainController) Get() {
+func (this *MainController) getSessionData() map[string]interface{} {
 	uname := this.GetSession("uname")
 
 	data := map[string]interface{}{}
-
 	if uname == nil {
 		data = map[string]interface{}{
 			"code": "100100",
@@ -25,8 +24,16 @@ func (this *MainController) Get() {
 			"data": uname,
 		}
 	}
+	return data
+}
 
-	this.Data["json"] = data
+func (this *MainController) Get() {
+	this.Data["content"] = this.getSessionData()
+	this.TplName = "template/index.tpl"
+}
+
+func (this *MainController) Post() {
+	this.Data["json"] = this.getSessionData()
 	this.ServeJSON()
 	//this.Ctx.Output.Body([]byte("nginx-ldap-auth, version " + g.VERSION + ", this user:" + uname.(string)))
 }

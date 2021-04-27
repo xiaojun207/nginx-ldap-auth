@@ -21,7 +21,7 @@ type LoginController struct {
 func init() {
 	store := cache.NewMemoryCache()
 	cpt = captcha.NewWithFilter("/auth/captcha/", store)
-	cpt.ChallengeNums = 2
+	cpt.ChallengeNums = 4
 	cpt.StdWidth = 120
 	cpt.StdHeight = 40
 
